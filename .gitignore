@@ -1,0 +1,12 @@
+.vscode/
+bin/
+docs/
+ERs/
+etc/
+include/
+lib/
+share/
+/LICENSE
+/LICENSE.router
+/README
+/README.router

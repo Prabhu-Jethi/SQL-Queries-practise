@@ -1,0 +1,3 @@
+CREATE DATABASE Practise;
+
+CREATE DATABASE Shows_movies;
