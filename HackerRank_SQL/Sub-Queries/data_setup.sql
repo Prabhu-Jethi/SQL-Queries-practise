@@ -85,3 +85,73 @@ create table high_score_report(
     score int NOT NULL,
     archived_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+
+CREATE TABLE salesman(
+    salesman_id int PRIMARY KEY NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    city VARCHAR(40),
+    commission FLOAT NOT NULL
+);
+INSERT INTO salesman VALUES
+(5001, 'James Hoog', 'New York', 0.15),
+(5002, 'Nail Knite', 'Paris', 0.13),
+(5005, 'Pit Alex', 'London', 0.11),
+(5006, 'Mc Lyon', 'Paris', 0.14),
+(5003, 'Lauson Hen', NULL, 0.12),
+(5007, 'Paul Adam', 'Rome', 0.13);
+
+
+CREATE TABLE customer_orders(
+    ord_no serial PRIMARY KEY,
+    puch_amt FLOAT NOT NULL,
+    ord_date DATE NOT NULL,
+    customer_id int NOT NULL,
+    salesman_id INT NOT NULL
+);
+INSERT INTO customer_orders (puch_amt, ord_date, customer_id, salesman_id) VALUES
+(150.5, '2012-10-05', 3005, 5002),
+(270.65, '2012-09-10', 3001, 5005),
+(65.26, '2012-10-05', 3002, 5001),
+(110.5, '2012-08-17', 3009, 5003),
+(948.5, '2012-09-10', 3005, 5002),
+(2400.6, '2012-07-27', 3007, 5001),
+(5760, '2012-09-10', 3002, 5001),
+(1983.43, '2012-10-10', 3009, 5003),
+(2480.4, '2012-10-10', 3004, 5006),
+(250.45, '2012-06-27', 3003, 5007);
+
+
+CREATE TABLE company_mast(
+    comp_id serial PRIMARY KEY,
+    comp_name VARCHAR(50) NOT NULL
+);
+INSERT INTO company_mast (comp_name) VALUES
+('Samsung'),
+('IBall'),
+('Epsion'),
+('Zebronics'),
+('Asus'),
+('Frontech');
+
+
+
+CREATE TABLE item_mast(
+    prod_id serial PRIMARY KEY,
+    prod_name VARCHAR(50) NOT NULL,
+    prod_price INT NOT NULL,
+    prod_comp_id INT not NULL
+);
+INSERT INTO item_mast (prod_name, prod_price, prod_comp_id) VALUES
+('Mother Board', 3200, 3),
+('Key Board', 450, 2),
+('ZIP device', 250, 1),
+('speaker', 550, 4),
+('monitor', 5200, 1),
+('dvd drive', 900, 6),
+('cd drive', 800, 2),
+('printer', 2400, 3),
+('refill cartridge', 350, 5),
+('mouse', 260, 4);
+
