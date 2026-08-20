@@ -188,3 +188,22 @@ WHERE s.salesman_id in (
         HAVING count(*) > 1
     )
 )
+
+--- Q19. Find salesman with all information who lives in the city where any of the customer lives
+
+SELECT *
+FROM salesman s
+WHERE s.city in (
+    SELECT cu.city
+    from cust cu
+)
+
+--- Q20. Find all the salesman for whom there are customers that follow them
+
+SELECT count(*) as salesman_followed_by_customers
+FROM salesman s
+WHERE s.city in (
+    SELECT cu.city
+    from cust cu
+)
+

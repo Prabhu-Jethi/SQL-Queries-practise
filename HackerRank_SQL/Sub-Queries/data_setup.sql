@@ -171,3 +171,38 @@ INSERT INTO item_mast (prod_name, prod_price, prod_comp_id) VALUES
 ('refill cartridge', 350, 5),
 ('mouse', 260, 4);
 
+
+
+CREATE TABLE emp_department(
+    dept_id serial PRIMARY Key NOT NULL,
+    dept_name VARCHAR(40),
+    dept_allotment INT NOT NULL
+);
+INSERT INTO emp_department (dept_name, dept_allotment) VALUES
+('HR', 45000),
+('IT', 50000),
+('Sales', '42500'),
+('Management', 73000),
+('Finance', 45000);
+
+CREATE TABLE emp_details(
+    emp_id serial PRIMARY KEY,
+    emp_fname VARCHAR(50),
+    emp_lname VARCHAR(50),
+    emp_dept INT NOT NULL
+);
+INSERT INTO emp_details (emp_fname, emp_lname, emp_dept) VALUES
+('Michale', 'Robinson', 4),
+('Thiodore', 'Forges', 2),
+('Robert', 'Downey', 2),
+('Williams', 'Mendes', 1),
+('Potts', 'Pepper', 1),
+('Jenifer', 'Lorens', 5),
+('Matthews', 'Mayden', 3),
+('Jacob', 'Eddie', 3),
+('Robert', 'Patkinson', 1),
+('Charlie', 'Jenner', 3),
+('Karen', 'Fukahuraa', 2),
+('Max', 'Amini', 5),
+('Luis', 'Nair', 4),
+('Aman', 'Gupta', 5);
