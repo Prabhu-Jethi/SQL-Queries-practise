@@ -110,4 +110,46 @@ WHERE s.salesman_id in (
     HAVING count(*) > 1
 )
 
---- Q12. 
+--- Q12. find all orders with order amount which are above average amounts of customers
+
+SELECT *
+FROM customer_orders a
+WHERE puch_amt > (
+    SELECT AVG(puch_amt)
+    FROM customer_orders b
+    WHERE b.customer_id = a.customer_id
+);
+
+--- Q13. find all orders with order amount which are `on` or `above` average amounts of customers
+
+SELECT *
+from customer_orders a
+where puch_amt >= (
+    SELECT avg(puch_amt)
+    from customer_orders b
+    WHERE b.customer_id = a.customer_id
+);
+
+--- Q14. find the sums of the amounts from the orders table, grouped by date, 
+--- eliminating all those dates where the sum was not at least 1000.00 above the maximum order amount for that date.
+
+SELECT SUM(c1.puch_amt) as total_amount, c1.ord_date
+from customer_orders c1
+GROUP BY c1.ord_date
+HAVING SUM(c1.puch_amt) > (
+    SELECT MAX(c2.puch_amt) + 1000
+    from customer_orders c2
+    WHERE c2.ord_date = c1.ord_date
+)
+
+--- Q15. Extract the data from the customer table if and only if one or more of the customers in the customer table are located in London.
+
+SELECT * 
+FROM cust cu
+WHERE EXISTS (
+    SELECT *
+    FROM cust cu
+    WHERE cu.city = 'London'
+);
+
+--- Q16. 
