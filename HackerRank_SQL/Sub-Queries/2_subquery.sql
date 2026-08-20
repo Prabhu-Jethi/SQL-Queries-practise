@@ -152,4 +152,4 @@ WHERE EXISTS (
     WHERE cu.city = 'London'
 );
 
---- Q16. 
+--- Q16.

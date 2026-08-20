@@ -9,7 +9,7 @@ s.branch as student_branch,
 e.score as student_score
 from exam_score as e
 INNER JOIN students as s on e.stud_id = s.stud_id
-WHERE e.score < (
+WHERE e.score > (
     SELECT avg(score) as class_avg
     from exam_score
 );
