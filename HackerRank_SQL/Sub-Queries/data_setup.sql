@@ -102,6 +102,22 @@ INSERT INTO salesman VALUES
 (5003, 'Lauson Hen', NULL, 0.12),
 (5007, 'Paul Adam', 'Rome', 0.13);
 
+CREATE TABLE cust(
+    customer_id int NOT NULL,
+    customer_name VARCHAR(50),
+    city VARCHAR(20),
+    grade int,
+    salesman_id INT
+);
+INSERT into cust VALUES
+(3002, 'Nick Rimando', 'New York', 100, 5001),
+(3005, 'Graham Bell', 'California', 200, 5002),
+(3001, 'Brad Guzaan', 'London', NULL, 5005),
+(3004, 'Fabian Ruis', 'Paris', 300, 5006),
+(3007, 'Brad Davis', 'New York', 200, 5001),
+(3009, 'Geoff Camero', 'Berlin', 100, 5003),
+(3008, 'Julian Green', 'London', 300, 5002),
+(3003, 'Jozy Altider', 'Moscow', NULL, 5007);
 
 CREATE TABLE customer_orders(
     ord_no serial PRIMARY KEY,
