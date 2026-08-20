@@ -152,4 +152,39 @@ WHERE EXISTS (
     WHERE cu.city = 'London'
 );
 
---- Q16.
+--- Q16. Find salesman who have multiple customers.
+
+SELECT *
+from salesman s
+where s.salesman_id in (
+    SELECT cu.salesman_id
+    from cust cu
+    GROUP BY cu.salesman_id
+    HAVING count(*) > 1
+)
+
+--- Q17. Salesman who worked only for one customer
+
+SELECT s.salesman_id, s.name
+from salesman s
+WHERE s.salesman_id in (
+    SELECT cu.salesman_id
+    from cust cu
+    GROUP BY cu.salesman_id
+    HAVING count(*) = 1
+)
+
+--- Q18. Extract the rows of all salesman who have customers with more than one orders
+
+SELECT *
+FROM salesman s
+WHERE s.salesman_id in (
+    SELECT cu.salesman_id
+    from cust cu
+    WHERE cu.customer_id in (
+        SELECT c.customer_id
+        from customer_orders c
+        GROUP BY c.customer_id
+        HAVING count(*) > 1
+    )
+)
