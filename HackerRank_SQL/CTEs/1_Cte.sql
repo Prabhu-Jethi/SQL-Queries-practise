@@ -7,17 +7,6 @@
 ---)
 
 
-SELECT 
-    s.stud_id as student_id,
-    s.stud_name as student_name,
-    s.branch as student_branch,
-    e.score as student_score
-from exam_score as e
-INNER JOIN students as s on e.stud_id = s.stud_id
-WHERE e.score > (
-    SELECT avg(score) as class_avg
-    from exam_score
-);
 
 --- Q1. Query out students with score greater than the average score of class
 
