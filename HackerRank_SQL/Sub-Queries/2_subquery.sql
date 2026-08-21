@@ -207,3 +207,27 @@ WHERE s.city in (
     from cust cu
 )
 
+--- Q21. Display the names of salesman whose names are alphabetically lower than the names of customers
+
+SELECT *
+from salesman s
+WHERE EXISTS (
+    SELECT *
+    from cust cu
+    WHERE s.name < cu.customer_name
+)
+
+--- Q22. Display customers who have a greater gradation than any customer who belongs to the alphabetically lower than the city New york
+---- [Tricky one] -----
+
+SELECT *
+from cust cu1
+WHERE cu1.grade > any (
+    SELECT cu2.grade
+    from cust cu2
+    WHERE cu2.city < 'New York'
+)
+
+
+
+
