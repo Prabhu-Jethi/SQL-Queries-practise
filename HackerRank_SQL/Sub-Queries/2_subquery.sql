@@ -228,6 +228,30 @@ WHERE cu1.grade > any (
     WHERE cu2.city < 'New York'
 )
 
+--- Q23. Display all the orders that had amounts that were greater than atleast one of the orders on Sep-10th-2012
 
+SELECT *
+from customer_orders c1
+WHERE c1.puch_amt > ANY (
+    SELECT c2.puch_amt
+    from customer_orders c2
+    WHERE c2.ord_date = '2012-09-10'
+)
+
+--- Q24. Orders with amount smaller than any amount for a customer in london
+
+SELECT *
+FROM customer_orders c1
+WHERE c1.puch_amt < ANY (
+    SELECT c2.puch_amt
+    from customer_orders c2
+    WHERE c2.customer_id in (
+        SELECT cu.customer_id
+        FROM cust cu
+        WHERE cu.city = 'London'
+    )
+)
+
+--- Q25. Display all orders with an amount smaller than the maximum amount for a customers in london.
 
 
