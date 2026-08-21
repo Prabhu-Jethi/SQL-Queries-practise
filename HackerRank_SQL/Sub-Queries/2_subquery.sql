@@ -254,4 +254,91 @@ WHERE c1.puch_amt < ANY (
 
 --- Q25. Display all orders with an amount smaller than the maximum amount for a customers in london.
 
+SELECT *
+FROM customer_orders c1
+WHERE puch_amt < (
+    SELECT MAX(c2.puch_amt)
+    FROM customer_orders c2
+    WHERE c2.customer_id IN (
+        SELECT cu.customer_id
+        FROM cust cu
+        WHERE cu.city = 'London'
+    ) 
+)
+
+--- Q26. Display only those customers whose grade are, in fact, higher than every customer in New York.
+
+SELECT cu1.customer_id, cu1.customer_name
+FROM cust cu1
+WHERE cu1.grade > ALL (
+    SELECT cu2.grade
+    FROM cust cu2
+    WHERE cu2.city = 'New York'
+)
+
+--- Q27. Find only these customers whose grade are higher than every customer to the city new york
+
+SELECT *
+FROM cust cu1
+WHERE cu1.grade > ALL (
+    SELECT cu2.grade
+    FROM cust cu2
+    WHERE cu2.city = 'New York'
+)
+
+--- Q28. Get all the information for those customers whose grade is not as the grade of customer who belongs to the city London
+
+SELECT *
+FROM cust cu1
+WHERE cu1.grade != ANY (
+    SELECT cu2.grade
+    FROM cust cu2
+    WHERE cu2.city = 'London'
+)
+
+--- Q29. find all those customers whose grade are not as the grade, belongs to the city Paris.
+
+SELECT *
+FROM cust 
+WHERE grade != ANY (
+    SELECT grade
+    FROM cust
+    WHERE city = 'Paris'
+)
+
+--- Q30. find all those customers who hold a different grade than any customer of the city Dallas.
+
+SELECT *
+FROM cust
+WHERE grade NOT IN (
+    SELECT grade
+    FROM cust
+    WHERE city = 'Dallas'
+)
+
+--- Q31. Find the average price of each manufacturer's product along with their name
+
+SELECT comp_name, AVG(prod_price)
+FROM company_mast, item_mast
+WHERE item_mast.prod_id = company_mast.comp_id
+GROUP BY comp_name
+
+--- Q32.  display the average price of the products which is more than or equal to 350 along with their names
+
+SELECT c.comp_name, AVG(i.prod_price) as average_price
+from item_mast i
+INNER JOIN company_mast c on c.comp_id = i.prod_comp_id
+GROUP BY c.comp_name
+HAVING AVG(i.prod_comp_id) >= 350;
+
+--- Q33. Display the name of each company, price for their most expensive product along with their Name
+
+SELECT c.comp_name, i.prod_name, i.prod_price 
+FROM item_mast i
+INNER JOIN company_mast c on c.comp_id = i.prod_comp_id
+AND i.prod_price = (
+    SELECT MAX(i.prod_price)
+    FROM item_mast i
+    WHERE i.prod_comp_id = c.comp_id
+)
 
