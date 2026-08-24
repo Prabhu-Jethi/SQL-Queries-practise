@@ -342,3 +342,62 @@ AND i.prod_price = (
     WHERE i.prod_comp_id = c.comp_id
 )
 
+--- Q34. Find all details of employee whose last name is 'Lorens' and 'Pepper'.
+
+SELECT *
+from emp_details 
+WHERE emp_lname in (
+    'Lorens', 'Pepper'
+);
+
+
+--- Q35. Display all the details of employees who works in department 3 and 4
+
+SELECT *
+FROM emp_details
+where emp_dept in (3, 4)
+
+
+--- Q36. Display first_name and last_name of employees working for the department whose allotment amount is more than 50000.
+
+SELECT emp_fname, emp_lname
+from emp_details 
+WHERE emp_dept in (
+    SELECT dept_id
+    from emp_department
+    WHERE dept_allotment > 50000
+);
+
+
+--- Q37. Find departments which sanction amount is larger than the average sanction amount of all departments.
+
+SELECT dept_id, dept_name
+FROM emp_department
+WHERE dept_allotment > (
+    SELECT AVG(dept_allotment)
+    from emp_department
+);
+
+
+--- Q38. Find names of departments with more than two employees are working.
+
+SELECT ed.dept_name
+FROM emp_department ed
+WHERE ed.dept_id in (
+    SELECT e.emp_dept
+    from emp_details e
+    GROUP BY e.emp_dept
+    HAVING count(*) > 2
+)
+
+
+--- Q39. Find first_name and last_name of employees working for departments whose sanction amount is 2nd largest.
+
+SELECT emp_fname, emp_lname
+FROM emp_details 
+WHERE emp_dept IN (SELECT dept_id
+                    FROM emp_department 
+                    WHERE dept_allotment = (SELECT MIN(dept_allotment)
+                                            FROM emp_department 
+                                            WHERE dept_allotment > (SELECT MIN(dept_allotment)
+                                                                    FROM emp_department)));
