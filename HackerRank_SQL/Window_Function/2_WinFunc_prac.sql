@@ -61,4 +61,38 @@ ORDER BY category, ranking;
 -- Write a query to pull the average 2nd ride delay for "in-the-moment" Uber users. Round the answer to 2-decimal places.
 
 
+WITH user_cte as (
+    SELECT 
+        DISTINCT u.user_id
+    FROM users u
+    INNER JOIN rides r ON u.user_id = r.user_id
+    AND r.ride_date = u.registration_date
+),
+rides_cte as (
+    SELECT 
+        r.user_id,
+        r.ride_date,
+        ROW_NUMBER () OVER (
+            PARTITION BY users.user_id ORDER BY r.ride_date
+        ) AS ride_nr,
+        LAG (r.ride_date) OVER (
+            PARTITION BY users.user_id ORDER BY r.ride_date
+        ) AS lag_ride_date
+    FROM user_cte as users
+    LEFT JOIN rides r on r.user_id = users.user_id
+)
 
+SELECT ROUND(AVG(ride_date - lag_ride_date), 2) AS average_ride_delay
+FROM rides_cte
+WHERE ride_nr = 2;
+
+
+
+--- Q8. What is the purpose of the OVER() clause in a window function? How does it interact with ORDER BY and PARTITION BY?
+
+-- A. The OVER() clause defines the window or set of rows for the function. ORDER BY within OVER() specifies the order of rows, 
+-- while PARTITION BY divides the result set into partitions. The function is applied to each partition separately and within the order specified
+
+
+
+--- Q9. 
