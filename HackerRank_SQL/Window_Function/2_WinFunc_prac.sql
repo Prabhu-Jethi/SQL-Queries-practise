@@ -95,4 +95,27 @@ WHERE ride_nr = 2;
 
 
 
---- Q9. 
+--- Q9. Sometimes, payment transactions are repeated by accident; it could be due to user error, API failure or a retry error that causes a credit card 
+-- to be charged twice. Using the transactions table, identify any payments made at the same merchant with the same credit card for the same amount 
+-- within 10 minutes of each other. Count such repeated payments.
+
+
+WITH payments_cte AS (
+    SELECT
+        merchant_id,
+        EXTRACT (EPOCH FROM transaction_timestamp - LAG (transaction_timestamp)
+            OVER (PARTITION BY merchant_id, credit_card_id, amount 
+                    ORDER BY transaction_timestamp)) / 60 AS minutes_difference
+    from transaction_details
+)
+SELECT COUNT(merchant_id) AS repeated_payments
+FROM payments_cte 
+WHERE minutes_difference <= 10;
+
+
+
+--- Q10. The Apple retention team needs your help to investigate buying patterns. Write a query to determine the percentage of buyers who 
+--- bought AirPods directly after they bought iPhones. Round your answer to a percentage (i.e. 20 for 20%, 50 for 50) with no decimals.
+
+
+WITH lag_products 

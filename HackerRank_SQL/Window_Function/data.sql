@@ -86,3 +86,31 @@ INSERT INTO rides (user_id, ride_date) VALUES
 (1, '2022-08-16'),
 (2, '2022-09-20'),
 (2, '2022-09-23');
+
+
+
+CREATE TABLE transaction_details (
+    transaction_id SERIAL PRIMARY KEY NOT NULL,
+    merchant_id INT NOT NULL,
+    credit_card_id INT,
+    amount INT,
+    transaction_timestamp TIMESTAMP
+);
+
+ALTER TABLE transaction_details
+ADD product_name VARCHAR(50);
+
+INSERT INTO transaction_details (merchant_id, credit_card_id, amount, transaction_timestamp) VALUES
+(101, 0123, 150, '2022-09-25 12:00:00'),
+(101, 0123, 100, '2022-09-25 12:08:00'),
+(101, 0123, 240, '2022-09-25 12:28:00'),
+(102, 1234, 500, '2022-09-25 13:00:00'),
+(102, 1234, 200, '2022-09-25 14:25:00');
+
+UPDATE transaction_details
+SET product_name = 'AirPods'
+WHERE transaction_id = 5;
+
+SELECT * FROM transaction_details;
+
+
