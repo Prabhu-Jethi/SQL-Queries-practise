@@ -114,3 +114,24 @@ WHERE transaction_id = 5;
 SELECT * FROM transaction_details;
 
 
+CREATE TABLE caller_history(
+    caller_id INT NOT NULL,
+    recipient_id INT,
+    date_called TIMESTAMP
+);
+
+INSERT INTO caller_history VALUES
+(1, 2, '2022-01-01 09:00:00'),
+(1, 3, '2022-01-01 17:00:00'),
+(1, 4, '2022-01-01 23:00:00'),
+(2, 5, '2022-07-05 09:00:00'),
+(2, 5, '2022-07-05 17:00:00'),
+(2, 3, '2022-07-05 23:00:00'),
+(2, 5, '2022-07-06 17:00:00'),
+(2, 3, '2022-08-01 09:00:00'),
+(2, 3, '2022-08-01 17:00:00'),
+(2, 4, '2022-08-02 09:00:00'),
+(2, 5, '2022-08-02 10:00:00'),
+(2, 4, '2022-08-02 11:00:00');
+
+SELECT * FROM caller_history;

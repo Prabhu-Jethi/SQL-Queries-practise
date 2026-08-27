@@ -118,4 +118,27 @@ WHERE minutes_difference <= 10;
 --- bought AirPods directly after they bought iPhones. Round your answer to a percentage (i.e. 20 for 20%, 50 for 50) with no decimals.
 
 
-WITH lag_products 
+WITH lag_products AS (
+    SELECT 
+        customer_id, 
+        product_name,
+        LAG(product_name) OVER(
+            PARTITION BY customer_id ORDER BY transaction_timestamp
+        ) AS previous_product
+    FROM transaction_details
+    GROUP BY customer_id, product_name, transaction_timestamp
+),
+interested_users AS (
+    SELECT customer_id AS airpod_iphone_buyers
+    FROM lag_products
+    WHERE LOWER(product_name) = 'airpods'
+        AND LOWER(previous_product) = 'iphone'
+    GROUP BY customer_id
+)
+SELECT
+    ROUND(
+        COUNT(DISTINCT iu.airpod_iphone_buyers)::DECIMAL /
+         COUNT(DISTINCT t.customer_id)::DECIMAL * 100, 0) as follow_up_percentage
+FROM transaction_details t
+LEFT JOIN interested_users AS iu
+  ON iu.airpod_iphone_buyers = t.customer_id;
