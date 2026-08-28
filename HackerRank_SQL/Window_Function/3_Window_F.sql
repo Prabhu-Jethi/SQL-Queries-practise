@@ -60,4 +60,31 @@ join last_calls l
 
 
 
---- Q2. 
+--- Q2. You are given a day worth of scheduled departure and arrival times of trains at one train station. One platform can only accommodate one train 
+-- from the beginning of the minute it's scheduled to arrive until the end of the minute it's scheduled to depart. Find the minimum number of platforms 
+-- necessary to accommodate the entire scheduled traffic.
+
+--- combine arrival and departures in one dataset
+WITH timetable_cte AS (
+    (SELECT
+        train_id,
+        arrival_time as time,
+        1 as mark
+    from train_arrives)
+    UNION ALL
+    (SELECT
+        train_id,
+        departure_time as time,
+        -1 as mark
+    from train_departures)
+ORDER by time ASC, mark DESC
+),
+--- calculating the cummulative sum
+cum_sum AS (
+    SELECT *,
+        sum(mark) OVER (ORDER by time ASC, mark DESC) as trains_at_same_time
+    FROM timetable_cte
+)
+--- aggregation and final output
+SELECT max(trains_at_same_time) AS min_platforms
+from cum_sum;
