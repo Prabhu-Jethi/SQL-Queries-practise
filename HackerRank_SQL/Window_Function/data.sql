@@ -137,3 +137,46 @@ INSERT INTO caller_history VALUES
 SELECT * FROM caller_history;
 
 
+
+
+CREATE TABLE train_arrives (
+    train_id SERIAL PRIMARY KEY NOT NULL,
+    arrival_time TIME
+);
+
+INSERT INTO train_arrives (arrival_time) VALUES
+('08:00'),
+('08:05'),
+('08:05'),
+('08:10'),
+('08:10'),
+('12:15'),
+('12:20'),
+('12:25'),
+('15:00'),
+('15:00'),
+('15:06'),
+('20:00'),
+('20:10');
+
+
+CREATE TABLE train_departures(
+    train_id INT NOT NULL,
+    departure_time time
+);
+
+INSERT INTO train_departures VALUES
+(1, '08:15'),
+(2, '08:10'),
+(3, '08:20'),
+(4, '08:25'),
+(5, '08:20'),
+(6, '13:00'),
+(7, '12:25'),
+(8, '12:30'),
+(9, '15:05'),
+(10, '15:10'),
+(11, '15:15'),
+(12, '15:15'),
+(13, '20:15'),
+(14, '20:15');
