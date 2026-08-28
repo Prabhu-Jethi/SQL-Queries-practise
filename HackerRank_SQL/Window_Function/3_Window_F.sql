@@ -59,7 +59,7 @@ join last_calls l
     and f.call_date = l.call_date;
 
 
-
+-- ****** #2 INTERVIEW PATTERN :- CALCULATE RUNNING TOTALS AND CUMMULATIVE METRICS ******
 --- Q2. You are given a day worth of scheduled departure and arrival times of trains at one train station. One platform can only accommodate one train 
 -- from the beginning of the minute it's scheduled to arrive until the end of the minute it's scheduled to depart. Find the minimum number of platforms 
 -- necessary to accommodate the entire scheduled traffic.
@@ -88,3 +88,6 @@ cum_sum AS (
 --- aggregation and final output
 SELECT max(trains_at_same_time) AS min_platforms
 from cum_sum;
+
+
+-- ****** Interview Pattern :- COMPARE THE CURRENT ROW WITH PREVIOUS OR NEXT ROW ********

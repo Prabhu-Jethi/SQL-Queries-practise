@@ -180,3 +180,4 @@ INSERT INTO train_departures VALUES
 (12, '15:15'),
 (13, '20:15'),
 (14, '20:15');
+
