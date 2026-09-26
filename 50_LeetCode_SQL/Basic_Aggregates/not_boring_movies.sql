@@ -22,4 +22,4 @@ Return the result table ordered by rating in descending order.
 SELECT id, movie, description, rating
 FROM cinema 
 WHERE id % 2 != 0 and description != 'boring'
-ORDER BY id DESC;
+ORDER BY rating DESC;
