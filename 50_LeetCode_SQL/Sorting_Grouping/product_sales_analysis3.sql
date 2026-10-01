@@ -21,3 +21,10 @@ Write a solution to find all sales that occurred in the first year each product 
 Return a table with the following columns: product_id, first_year, quantity, and price.
 */
 
+SELECT product_id, year as first_year, quantity, price
+FROM Sales
+WHERE (product_id, year) in (
+    SELECT product_id, MIN(year) as first_year
+    FROM sales
+    GROUP BY product_id
+)
